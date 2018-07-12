@@ -30,6 +30,7 @@ public class GameScreen extends ScreenAdapter {
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
     private Punchy punchy;
+    private Fist fist;
 
 
     public GameScreen(PunchyFist punchyFist){
@@ -57,7 +58,7 @@ public class GameScreen extends ScreenAdapter {
             orthogonalTiledMapRenderer.setView(camera);
             resize((int)WORLD_WITH, (int)WORLD_HEIGHT);
             punchy = new Punchy();
-
+            fist = new Fist();
     }
 
         @Override
@@ -70,7 +71,11 @@ public class GameScreen extends ScreenAdapter {
 
     private void update(float delta){
         punchy.update();
-
+        //fist.setPosition(punchy.getX() + 32F, punchy.getY() + 32F);
+        fist.setPosition(punchy);
+        fist.update();
+        //stopFistPunch();
+        stopPunchyLeavingTheScreen();
     }
 
     private void clearScreen(){
@@ -96,8 +101,27 @@ public class GameScreen extends ScreenAdapter {
         shapeRenderer.setTransformMatrix(camera.view);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         punchy.drawDebug(shapeRenderer);
+        fist.drawDebug(shapeRenderer);
         shapeRenderer.end();
     }
 
+    private void stopFistPunch(){
+        if (fist.isPunching())
+            fist.punched();
+    }
+    private void stopPunchyLeavingTheScreen(){
+        if(punchy.getY() < 0){
+            punchy.setPosition(punchy.getX(), 0);
+            punchy.landed();
+        }
+
+        if(punchy.getX() < 0){
+            punchy.setPosition(0, punchy.getY());
+        }
+
+        if(punchy.getX() + punchy.WIDTH >  WORLD_WITH){
+            punchy.setPosition(WORLD_WITH - punchy.WIDTH, punchy.getY());
+        }
+    }
 
 }
