@@ -2,6 +2,9 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -12,6 +15,7 @@ public class Fist {
     public static final int WIDTH = 24;
     public static final int HEIGHT = 24;
     public static final float OFFSET = 32;
+    private static TextureRegion fist;
 
     private final Rectangle collisionRectangle = new Rectangle(0, 0, WIDTH, HEIGHT);
 
@@ -19,6 +23,14 @@ public class Fist {
     private float y = 0;
     private float xSpeed = 0;
     private boolean blockPunch = false;
+
+    public Fist(TextureRegion texture){
+        this.fist = texture;
+    }
+
+    public void draw(Batch batch){
+        batch.draw(fist, x, y);
+    }
 
     public void setPosition(float x, float y){
         this.x = x;

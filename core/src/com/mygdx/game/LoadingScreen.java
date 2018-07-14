@@ -5,6 +5,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -22,11 +23,8 @@ public class LoadingScreen extends ScreenAdapter {
     private final PunchyFist punchyFist;
     private static float progress = 0;
 
-    public LoadingScreen(PunchyFist punchyFist
-    ) {
-        this.punchyFist
-                = punchyFist
-        ;
+    public LoadingScreen(PunchyFist punchyFist ) {
+        this.punchyFist = punchyFist;
     }
 
     @Override
@@ -42,11 +40,11 @@ public class LoadingScreen extends ScreenAdapter {
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
         shapeRenderer = new ShapeRenderer();
 
-       // punchyFist
-       //         .getAssetManager().load("pete.png", Texture.class);
+        punchyFist.getAssetManager().load("punchy_fist_assets.atlas", TextureAtlas.class);
 
-        punchyFist
-                .getAssetManager().load("map.tmx", TiledMap.class);
+     //   punchyFist.getAssetManager().load("fist.png", Texture.class);
+     //   punchyFist.getAssetManager().load("punchy.png", Texture.class);
+        punchyFist.getAssetManager().load("map.tmx", TiledMap.class);
         //batch = new SpriteBatch();
     }
 
@@ -64,14 +62,10 @@ public class LoadingScreen extends ScreenAdapter {
     }
 
     private void update(float delta) {
-        if (punchyFist
-                .getAssetManager().update()) {
-            punchyFist
-                    .setScreen(new GameScreen(punchyFist
-                    ));
+        if (punchyFist.getAssetManager().update()) {
+            punchyFist.setScreen(new GameScreen(punchyFist));
         } else {
-            progress = punchyFist
-                    .getAssetManager().getProgress();
+            progress = punchyFist.getAssetManager().getProgress();
         }
     }
 

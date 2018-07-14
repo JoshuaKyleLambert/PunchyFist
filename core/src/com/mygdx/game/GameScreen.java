@@ -2,11 +2,9 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
@@ -56,9 +54,12 @@ public class GameScreen extends ScreenAdapter {
             tileMap = punchyFist.getAssetManager().get("map.tmx");
             orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap, batch);
             orthogonalTiledMapRenderer.setView(camera);
-            resize((int)WORLD_WITH, (int)WORLD_HEIGHT);
-            punchy = new Punchy();
-            fist = new Fist();
+            //resize((int)WORLD_WITH, (int)WORLD_HEIGHT);
+
+            TextureAtlas textureAtlas = punchyFist.getAssetManager().get("punchy_fist_assets.atlas");
+
+            punchy = new Punchy(textureAtlas.findRegion("punchy"));
+            fist = new Fist(textureAtlas.findRegion("fist"));
     }
 
         @Override
@@ -70,7 +71,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void update(float delta){
-        punchy.update();
+        punchy.update(delta);
         //fist.setPosition(punchy.getX() + 32F, punchy.getY() + 32F);
         fist.setPosition(punchy);
         fist.update();
@@ -92,8 +93,10 @@ public class GameScreen extends ScreenAdapter {
         batch.setProjectionMatrix(camera.projection);
         batch.setTransformMatrix(camera.view);
         orthogonalTiledMapRenderer.render();
-       // batch.begin();
-       // batch.end();
+        batch.begin();
+        punchy.draw(batch);
+        fist.draw(batch);
+        batch.end();
     }
 
     private void drawDebug(){
@@ -115,6 +118,10 @@ public class GameScreen extends ScreenAdapter {
             punchy.landed();
         }
 
+        if(punchy.getY() > WORLD_HEIGHT - punchy.HEIGHT){
+            punchy.setPosition(punchy.getX(), WORLD_HEIGHT - punchy.HEIGHT);
+        }
+
         if(punchy.getX() < 0){
             punchy.setPosition(0, punchy.getY());
         }
@@ -122,6 +129,8 @@ public class GameScreen extends ScreenAdapter {
         if(punchy.getX() + punchy.WIDTH >  WORLD_WITH){
             punchy.setPosition(WORLD_WITH - punchy.WIDTH, punchy.getY());
         }
+
+
     }
 
 }
