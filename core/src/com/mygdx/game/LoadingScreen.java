@@ -2,7 +2,9 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.assets.loaders.BitmapFontLoader;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -23,7 +25,7 @@ public class LoadingScreen extends ScreenAdapter {
     private final PunchyFist punchyFist;
     private static float progress = 0;
 
-    public LoadingScreen(PunchyFist punchyFist ) {
+    public LoadingScreen(PunchyFist punchyFist) {
         this.punchyFist = punchyFist;
     }
 
@@ -42,10 +44,15 @@ public class LoadingScreen extends ScreenAdapter {
 
         punchyFist.getAssetManager().load("punchy_fist_assets.atlas", TextureAtlas.class);
 
-     //   punchyFist.getAssetManager().load("fist.png", Texture.class);
-     //   punchyFist.getAssetManager().load("punchy.png", Texture.class);
+        //   punchyFist.getAssetManager().load("fist.png", Texture.class);
+        //   punchyFist.getAssetManager().load("punchy.png", Texture.class);
         punchyFist.getAssetManager().load("map.tmx", TiledMap.class);
         //batch = new SpriteBatch();
+
+        BitmapFontLoader.BitmapFontParameter bitmapFontParameter = new BitmapFontLoader.BitmapFontParameter();
+        bitmapFontParameter.atlasName = "punchy_fist_assets.atlas";
+        punchyFist.getAssetManager().load("score.fnt", BitmapFont.class, bitmapFontParameter);
+
     }
 
     @Override
