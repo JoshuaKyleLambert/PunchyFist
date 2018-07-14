@@ -10,7 +10,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.height = 448;
 		config.width = (int)(448 * 2.75);  // ultra panavision
-		TexturePacker.process("../assets", "../assets", "punchy_fist_assets");
+		TexturePacker.process("../assets/sprites", "../assets", "punchy_fist_assets");
+
 		new LwjglApplication(new PunchyFist(), config);
 	}
 }

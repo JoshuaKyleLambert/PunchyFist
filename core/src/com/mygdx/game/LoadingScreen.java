@@ -16,8 +16,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class LoadingScreen extends ScreenAdapter {
     private static final float WORLD_WIDTH = 1232;
     private static final float WORLD_HEIGHT = 448;
-    private static final float PROGRESS_BAR_WIDTH = 100;
-    private static final float PROGRESS_BAR_HEIGHT = 25;
+    private static final float PROGRESS_BAR_WIDTH = WORLD_WIDTH * 0.75f;
+    private static final float PROGRESS_BAR_HEIGHT = WORLD_HEIGHT * 0.75f;
     private ShapeRenderer shapeRenderer;
     private Viewport viewport;
     private Camera camera;
@@ -43,11 +43,8 @@ public class LoadingScreen extends ScreenAdapter {
         shapeRenderer = new ShapeRenderer();
 
         punchyFist.getAssetManager().load("punchy_fist_assets.atlas", TextureAtlas.class);
-
-        //   punchyFist.getAssetManager().load("fist.png", Texture.class);
-        //   punchyFist.getAssetManager().load("punchy.png", Texture.class);
         punchyFist.getAssetManager().load("map.tmx", TiledMap.class);
-        //batch = new SpriteBatch();
+
 
         BitmapFontLoader.BitmapFontParameter bitmapFontParameter = new BitmapFontLoader.BitmapFontParameter();
         bitmapFontParameter.atlasName = "punchy_fist_assets.atlas";

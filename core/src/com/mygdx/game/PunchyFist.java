@@ -17,7 +17,7 @@ public class PunchyFist extends Game {
 	@Override
 	public void create () {
 	assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-	setScreen(new com.mygdx.game.LoadingScreen(this));
+	setScreen(new StartScreen(this));
 	}
 
 	public AssetManager getAssetManager() { return assetManager;}
