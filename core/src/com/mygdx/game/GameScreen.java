@@ -1,25 +1,30 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.PunchyFist;
-import com.sun.xml.internal.fastinfoset.util.CharArrayIntMap;
-import com.sun.xml.internal.ws.message.saaj.SAAJHeader;
+
+import java.util.Iterator;
+
 
 public class GameScreen extends ScreenAdapter {
-    private static final float WORLD_WITH = 1232;
+    private static final float WORLD_WITH = 1280;
     private static final float WORLD_HEIGHT = 448;
     private ShapeRenderer shapeRenderer;
     private Viewport viewport;
@@ -37,7 +42,7 @@ public class GameScreen extends ScreenAdapter {
 
     private BitmapFont bitmapFont;
     private GlyphLayout glyphLayout;
-
+    private int CELL_SIZE = 16;
 
     public GameScreen(PunchyFist punchyFist) {
         this.punchyFist = punchyFist;
@@ -51,10 +56,6 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void show() {
         camera = new OrthographicCamera();
-        //
-        //
-        // camera.position.set(WORLD_WITH / 2, WORLD_HEIGHT / 2, 0);
-        //camera.update();
         viewport = new FitViewport(WORLD_WITH, WORLD_HEIGHT, camera);
         viewport.apply(true);
         shapeRenderer = new ShapeRenderer();
@@ -62,14 +63,10 @@ public class GameScreen extends ScreenAdapter {
         tileMap = punchyFist.getAssetManager().get("map.tmx");
         orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap, batch);
         orthogonalTiledMapRenderer.setView(camera);
-        //resize((int)WORLD_WITH, (int)WORLD_HEIGHT);
-
         TextureAtlas textureAtlas = punchyFist.getAssetManager().get("punchy_fist_assets.atlas");
 
         punchy = new Punchy(textureAtlas.findRegion("punchy"));
         fist = new Fist(textureAtlas.findRegion("fist"));
-
-       // bitmapFont = new BitmapFont();
         bitmapFont = punchyFist.getAssetManager().get("score.fnt");
         glyphLayout = new GlyphLayout();
     }
@@ -94,6 +91,7 @@ public class GameScreen extends ScreenAdapter {
         updateScore();
         //stopFistPunch();
         stopPunchyLeavingTheScreen();
+        handlePunchyCollision();
     }
 
     private void drawScore() {
@@ -158,6 +156,91 @@ public class GameScreen extends ScreenAdapter {
         }
 
 
+    }
+
+    private Array<CollisionCell> punchyCoversWhat() {
+        float x = punchy.getX();
+        float y = punchy.getY();
+        Array<CollisionCell> cellsCovered = new Array<CollisionCell>();
+        float cellX = x / CELL_SIZE;
+        float cellY = y / CELL_SIZE;
+
+        int bottomLeftCellX = MathUtils.floor(cellX);
+        int bottomLeftCellY = MathUtils.floor(cellY);
+
+        TiledMapTileLayer tiledMapTileLayer = (TiledMapTileLayer) tileMap.getLayers().get(0);
+
+        cellsCovered.add(new CollisionCell(tiledMapTileLayer.getCell(bottomLeftCellX, bottomLeftCellY), bottomLeftCellX, bottomLeftCellY));
+
+        if (cellX % 1 != 0 && cellY % 1 != 0) {
+            int topRightCellX = bottomLeftCellX + 1;
+            int topRightCellY = bottomLeftCellY + 1;
+            cellsCovered.add(new CollisionCell(tiledMapTileLayer.getCell(topRightCellX, topRightCellY), topRightCellX, topRightCellY));
+        }
+
+        if (cellX % 1 != 0) {
+            int bottomRightCellX = bottomLeftCellX + 1;
+            int bottomRightCellY = bottomLeftCellY;
+            cellsCovered.add(new CollisionCell(tiledMapTileLayer.getCell(bottomRightCellX, bottomRightCellY), bottomRightCellX, bottomLeftCellY));
+        }
+
+        if (cellY % 1 != 0) {
+            int topLeftCellX = bottomLeftCellX;
+            int topLeftCellY = bottomLeftCellY + 1;
+            cellsCovered.add(new CollisionCell(tiledMapTileLayer.getCell(topLeftCellX, topLeftCellY), topLeftCellX, topLeftCellY));
+        }
+
+        return cellsCovered;
+
+    }
+
+    private Array<CollisionCell> filterOutNonTiledCells(Array<CollisionCell> cells) {
+        for (Iterator<CollisionCell> iter = cells.iterator(); iter.hasNext(); ) {
+            CollisionCell collisionCell = iter.next();
+            if (collisionCell.isEmpty()) {
+                iter.remove();
+            }
+        }
+        return cells;
+    }
+
+
+    private void handlePunchyCollision() {
+        Array<CollisionCell> punchyCells = punchyCoversWhat();
+        punchyCells = filterOutNonTiledCells(punchyCells);
+        for (CollisionCell cell : punchyCells) {
+            float cellLevelX = cell.cellX * CELL_SIZE;
+            float cellLevelY = cell.cellY * CELL_SIZE;
+            Rectangle intersection = new Rectangle();
+            Intersector.intersectRectangles(punchy.getCollisionRectangle(), new Rectangle(cellLevelX, cellLevelY, CELL_SIZE, CELL_SIZE), intersection);
+            if (intersection.getHeight() < intersection.getWidth()) {
+                punchy.setPosition(punchy.getX(), intersection.getY() + intersection.getHeight());
+                punchy.landed();
+            } else if (intersection.getWidth() < intersection.getHeight()) {
+                if (intersection.getX() == punchy.getX()) {
+                    punchy.setPosition(intersection.getX() , punchy.getY());
+                }
+                if (intersection.getX() > punchy.getX()) {
+                    punchy.setPosition(intersection.getX() - Punchy.WIDTH, punchy.getY());
+                }
+            }
+        }
+    }
+
+    private class CollisionCell {
+        private final TiledMapTileLayer.Cell cell;
+        private final int cellX;
+        private final int cellY;
+
+        public CollisionCell(TiledMapTileLayer.Cell cell, int cellX, int cellY) {
+            this.cell = cell;
+            this.cellX = cellX;
+            this.cellY = cellY;
+        }
+
+        public boolean isEmpty() {
+            return cell == null;
+        }
     }
 
 }

@@ -14,8 +14,8 @@ import com.badlogic.gdx.math.Rectangle;
 public class Punchy {
     private static final float MAX_X_SPEED = 6;
     private static final float MAX_Y_SPEED = 6;
-    public static final int WIDTH = 67;
-    public static final int HEIGHT = 63;
+    public static final int WIDTH = 64;
+    public static final int HEIGHT = 64;
 
     private final Rectangle collisionRectangle = new Rectangle(0, 0, WIDTH, HEIGHT);
 
@@ -47,6 +47,8 @@ public class Punchy {
 
 
     }
+
+    public Rectangle getCollisionRectangle(){return collisionRectangle;}
 
     public void draw(Batch batch) {
 

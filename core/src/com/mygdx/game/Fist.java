@@ -14,7 +14,9 @@ public class Fist {
     private static float MIN_Y_POSITION = 0;
     public static final int WIDTH = 24;
     public static final int HEIGHT = 24;
-    public static final float OFFSET = 32;
+    public static final float YOFFSET = 16;
+    public static final float XOFFSET = 40;
+
     private static TextureRegion fist;
 
     private final Rectangle collisionRectangle = new Rectangle(0, 0, WIDTH, HEIGHT);
@@ -40,8 +42,8 @@ public class Fist {
     }
 
     public void setPosition(Punchy punchy){
-        MIN_X_POSITION = punchy.getX() + OFFSET;
-        this.y = punchy.getY() + OFFSET;
+        MIN_X_POSITION = punchy.getX() + XOFFSET;
+        this.y = punchy.getY() + YOFFSET;
     }
 
     public boolean isPunching(){

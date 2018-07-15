@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="77" height="28" tilewidth="16" tileheight="16" infinite="0" nextobjectid="1">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="80" height="28" tilewidth="16" tileheight="16" infinite="0" nextobjectid="1">
  <tileset firstgid="1" source="floor.tsx"/>
- <layer name="Tile Layer 1" width="77" height="28">
+ <layer name="Tile Layer 1" width="80" height="28">
   <data encoding="base64" compression="zlib">
-   eJztzzkOgDAMRNEQ9jXA/Q/LFCmsoHAA/J/0i3HnEAAAAAAAAAAAAADAl6ha1ane9EdNeP8bP24eKv+2e1CjmtSsFrXmXbt5qPzb7k3t6lBJnerKu3bzUPm33bd6ANRbB6I=
+   eJzt08sKhDAMRmFHZ0adi1Xf/2H9NwUpaaGrKjkfnE1WKTRdBwAAAAAAAAAAcD0P1atBPdVLvZtudC+jmtSsPuqrfk03upe/WlRQq9rU3nSja8rdae3cq9yd1s69yt1p7fzM+qN9Yeah9N2DMY+3bP3RqTDzUPru2ZjHW7b+6FKYeSh9dzDm8ZYPKcsKig==
   </data>
  </layer>
 </map>

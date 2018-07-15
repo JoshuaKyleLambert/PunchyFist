@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class StartScreen extends ScreenAdapter {
-    private static final float WORLD_WITH = 1232;
+    private static final float WORLD_WITH = 1280;
     private static final float WORLD_HEIGHT = 448;
 
     private Stage stage;
@@ -50,6 +50,7 @@ public class StartScreen extends ScreenAdapter {
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
                 game.setScreen(new LoadingScreen(game));
+                dispose();
             }
         });
 
@@ -73,5 +74,12 @@ public class StartScreen extends ScreenAdapter {
         stage.draw();
     }
 
+    public void dispose(){
+        stage.dispose();
+        backgroundTexture.dispose();
+        playPressTexture.dispose();
+        playTexture.dispose();
+        titleTexture.dispose();
+    }
 
 }

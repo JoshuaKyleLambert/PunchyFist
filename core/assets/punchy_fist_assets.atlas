@@ -20,7 +20,7 @@ fist
   index: -1
 floor
   rotate: false
-  xy: 272, 173
+  xy: 260, 174
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
@@ -28,8 +28,8 @@ floor
 punchy
   rotate: false
   xy: 2, 158
-  size: 268, 63
-  orig: 268, 63
+  size: 256, 64
+  orig: 256, 64
   offset: 0, 0
   index: -1
 score
