@@ -83,7 +83,7 @@ public class LoadingScreen extends ScreenAdapter {
         shapeRenderer.setProjectionMatrix(camera.projection);
         shapeRenderer.setTransformMatrix(camera.view);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.WHITE);
+        shapeRenderer.setColor(Color.GOLDENROD);
         shapeRenderer.rect(
                 (WORLD_WIDTH - PROGRESS_BAR_WIDTH) / 2,
                 WORLD_HEIGHT / 2 - PROGRESS_BAR_HEIGHT / 2,

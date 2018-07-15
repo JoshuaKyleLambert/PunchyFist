@@ -5,11 +5,14 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -44,6 +47,8 @@ public class GameScreen extends ScreenAdapter {
     private GlyphLayout glyphLayout;
     private int CELL_SIZE = 16;
 
+    private Array<Heart> hearts = new Array<Heart>();
+
     public GameScreen(PunchyFist punchyFist) {
         this.punchyFist = punchyFist;
     }
@@ -69,6 +74,7 @@ public class GameScreen extends ScreenAdapter {
         fist = new Fist(textureAtlas.findRegion("fist"));
         bitmapFont = punchyFist.getAssetManager().get("score.fnt");
         glyphLayout = new GlyphLayout();
+        populateHearts();
     }
 
     @Override
@@ -76,7 +82,7 @@ public class GameScreen extends ScreenAdapter {
         update(delta);
         clearScreen();
         draw();
-        drawDebug();
+        //drawDebug();
     }
 
     private void updateScore() {
@@ -92,6 +98,7 @@ public class GameScreen extends ScreenAdapter {
         //stopFistPunch();
         stopPunchyLeavingTheScreen();
         handlePunchyCollision();
+        handlePunchyCollisionWithHeart();
     }
 
     private void drawScore() {
@@ -117,6 +124,9 @@ public class GameScreen extends ScreenAdapter {
         batch.setTransformMatrix(camera.view);
         orthogonalTiledMapRenderer.render();
         batch.begin();
+        for (Heart heart : hearts) {
+            heart.draw(batch);
+        }
         punchy.draw(batch);
         fist.draw(batch);
         drawScore();
@@ -218,12 +228,35 @@ public class GameScreen extends ScreenAdapter {
                 punchy.landed();
             } else if (intersection.getWidth() < intersection.getHeight()) {
                 if (intersection.getX() == punchy.getX()) {
-                    punchy.setPosition(intersection.getX() , punchy.getY());
+                    punchy.setPosition(intersection.getX(), punchy.getY());
                 }
                 if (intersection.getX() > punchy.getX()) {
                     punchy.setPosition(intersection.getX() - Punchy.WIDTH, punchy.getY());
                 }
             }
+        }
+
+
+    }
+
+    private void handlePunchyCollisionWithHeart() {
+        for (Iterator<Heart> iter = hearts.iterator(); iter.hasNext(); ) {
+            Heart heart = iter.next();
+            if (punchy.getCollisionRectangle().overlaps(heart.getCollisionRectangle())) {
+                System.out.println("Collision!");
+                iter.remove();
+                hearts.removeValue(heart, true);
+            }
+        }
+    }
+
+    private void populateHearts() {
+        MapLayer mapLayer = tileMap.getLayers().get("Collectables");
+        for (MapObject mapObject : mapLayer.getObjects()) {
+            hearts.add(
+                    new Heart(punchyFist.getAssetManager().get("heart.png", Texture.class),
+                            mapObject.getProperties().get("x", Float.class),
+                            mapObject.getProperties().get("y", Float.class)));
         }
     }
 

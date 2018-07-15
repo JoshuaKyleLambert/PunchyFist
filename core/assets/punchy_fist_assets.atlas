@@ -6,35 +6,42 @@ filter: Nearest,Nearest
 repeat: none
 acorn
   rotate: false
-  xy: 132, 140
+  xy: 358, 214
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 fist
   rotate: false
-  xy: 2, 2
+  xy: 132, 140
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 floor
   rotate: false
-  xy: 260, 174
+  xy: 260, 182
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
+heart
+  rotate: false
+  xy: 2, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 punchy
   rotate: false
-  xy: 2, 158
+  xy: 2, 166
   size: 256, 64
   orig: 256, 64
   offset: 0, 0
   index: -1
 score
   rotate: false
-  xy: 2, 28
+  xy: 2, 36
   size: 128, 128
   orig: 128, 128
   offset: 0, 0

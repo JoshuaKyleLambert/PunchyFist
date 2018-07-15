@@ -30,6 +30,8 @@ public class Fist {
         this.fist = texture;
     }
 
+    public Rectangle getCollisionRectangle(){ return collisionRectangle; }
+
     public void draw(Batch batch){
         batch.draw(fist, x, y);
     }
