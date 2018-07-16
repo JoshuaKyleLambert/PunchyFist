@@ -74,7 +74,7 @@ public class GameScreen extends ScreenAdapter {
         fist = new Fist(textureAtlas.findRegion("fist"));
         bitmapFont = punchyFist.getAssetManager().get("score.fnt");
         glyphLayout = new GlyphLayout();
-        populateHearts();
+        populateHearts(textureAtlas);
     }
 
     @Override
@@ -85,8 +85,8 @@ public class GameScreen extends ScreenAdapter {
         //drawDebug();
     }
 
-    private void updateScore() {
-
+    private void updateScore(int points) {
+        score += points;
     }
 
     private void update(float delta) {
@@ -94,11 +94,12 @@ public class GameScreen extends ScreenAdapter {
         //fist.setPosition(punchy.getX() + 32F, punchy.getY() + 32F);
         fist.setPosition(punchy);
         fist.update();
-        updateScore();
+        //updateScore();
         //stopFistPunch();
         stopPunchyLeavingTheScreen();
-        handlePunchyCollision();
         handlePunchyCollisionWithHeart();
+        handlePunchyCollision();
+
     }
 
     private void drawScore() {
@@ -139,6 +140,9 @@ public class GameScreen extends ScreenAdapter {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         punchy.drawDebug(shapeRenderer);
         fist.drawDebug(shapeRenderer);
+        for(Heart heart: hearts){
+            heart.drawDebug(shapeRenderer);
+        }
         shapeRenderer.end();
     }
 
@@ -243,20 +247,20 @@ public class GameScreen extends ScreenAdapter {
         for (Iterator<Heart> iter = hearts.iterator(); iter.hasNext(); ) {
             Heart heart = iter.next();
             if (punchy.getCollisionRectangle().overlaps(heart.getCollisionRectangle())) {
-                System.out.println("Collision!");
+
                 iter.remove();
-                hearts.removeValue(heart, true);
+                updateScore(25);
             }
         }
     }
 
-    private void populateHearts() {
+    private void populateHearts(TextureAtlas textureAtlas) {
         MapLayer mapLayer = tileMap.getLayers().get("Collectables");
         for (MapObject mapObject : mapLayer.getObjects()) {
-            hearts.add(
-                    new Heart(punchyFist.getAssetManager().get("heart.png", Texture.class),
-                            mapObject.getProperties().get("x", Float.class),
-                            mapObject.getProperties().get("y", Float.class)));
+            hearts.add(new Heart(
+                           textureAtlas.findRegion("heart"),
+                           mapObject.getProperties().get("x", Float.class),
+                           mapObject.getProperties().get("y", Float.class)));
         }
     }
 

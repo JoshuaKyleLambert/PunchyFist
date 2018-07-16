@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="80" height="28" tilewidth="16" tileheight="16" infinite="0" nextobjectid="13">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="80" height="28" tilewidth="16" tileheight="16" infinite="0" nextobjectid="16">
  <tileset firstgid="1" source="floor.tsx"/>
  <tileset firstgid="19" source="heart.tsx"/>
- <tileset firstgid="20" source="heart.tsx"/>
  <layer name="Tile Layer 1" width="80" height="28">
   <data encoding="base64" compression="zlib">
-   eJzt18sKgzAQRmFvbdW22tb3f1f/TUDCJJAuDDLng7MZXCSQWdg0AAAAwLm22gcAAAAAgJPxH/SfVnWqV4O6qXvVE13LQ41qUrN6qlfVE13LWy1qVR/1VT/jO+/7ndrT0rlXqT0tnXuV2tPS+ZH1RrvMzEPxvXtjHnbZeqNjZuah+N6TMQ+7bL3RJTPzUHzv1ZiHXd4BZMQKww==
+   eJzt08sKhDAMRmFHZ0adi1Xf/2H9NwUpaaGrKjkfnE1WKTRdBwAAAAAAAAAAcD0P1atBPdVLvZtudC+jmtSsPuqrfk03upe/WlRQq9rU3nSja8rdae3cq9yd1s69yt1p7fzM+qN9Yeah9N2DMY+3bP3RqTDzUPru2ZjHW7b+6FKYeSh9dzDm8ZYPKcsKig==
   </data>
  </layer>
- <objectgroup name="Collectables"/>
+ <objectgroup name="Collectables" opacity="0.4">
+  <object id="13" gid="19" x="740" y="346" width="32" height="32"/>
+  <object id="14" gid="19" x="623" y="381" width="32" height="32"/>
+  <object id="15" gid="19" x="491" y="354" width="32" height="32"/>
+ </objectgroup>
 </map>
