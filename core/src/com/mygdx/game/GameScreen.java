@@ -99,8 +99,21 @@ public class GameScreen extends ScreenAdapter {
         stopPunchyLeavingTheScreen();
         handlePunchyCollisionWithHeart();
         handlePunchyCollision();
+        updateCameraX();
 
     }
+
+    private void updateCameraX(){
+        TiledMapTileLayer tiledMapTileLayer = (TiledMapTileLayer) tileMap.getLayers().get(0);
+        float levelWidth = tiledMapTileLayer.getWidth() * tiledMapTileLayer.getTileWidth();
+
+        if((punchy.getX() > WORLD_WITH / 2f) && (punchy.getX() < (levelWidth - WORLD_WITH / 2f))){
+            camera.position.set(punchy.getX(), camera.position.y, camera.position.z);
+            camera.update();
+            orthogonalTiledMapRenderer.setView(camera);
+        }
+    }
+
 
     private void drawScore() {
         String scoreAsString = Integer.toString(score);
@@ -165,8 +178,11 @@ public class GameScreen extends ScreenAdapter {
             punchy.setPosition(0, punchy.getY());
         }
 
-        if (punchy.getX() + punchy.WIDTH > WORLD_WITH) {
-            punchy.setPosition(WORLD_WITH - punchy.WIDTH, punchy.getY());
+        TiledMapTileLayer tiledMapTileLayer = (TiledMapTileLayer) tileMap.getLayers().get(0);
+        float levelWidth = tiledMapTileLayer.getWidth() * tiledMapTileLayer.getTileWidth();
+
+        if (punchy.getX() + punchy.WIDTH > levelWidth) {
+            punchy.setPosition(levelWidth - punchy.WIDTH, punchy.getY());
         }
 
 

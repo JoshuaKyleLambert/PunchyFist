@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="80" height="28" tilewidth="16" tileheight="16" infinite="0" nextobjectid="16">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="160" height="28" tilewidth="16" tileheight="16" infinite="0" nextobjectid="16">
  <tileset firstgid="1" source="floor.tsx"/>
  <tileset firstgid="19" source="heart.tsx"/>
- <layer name="Tile Layer 1" width="80" height="28">
+ <layer name="Tile Layer 1" width="160" height="28">
   <data encoding="base64" compression="zlib">
-   eJzt08sKhDAMRmFHZ0adi1Xf/2H9NwUpaaGrKjkfnE1WKTRdBwAAAAAAAAAAcD0P1atBPdVLvZtudC+jmtSsPuqrfk03upe/WlRQq9rU3nSja8rdae3cq9yd1s69yt1p7fzM+qN9Yeah9N2DMY+3bP3RqTDzUPru2ZjHW7b+6FKYeSh9dzDm8ZYPKcsKig==
+   eJzt1dsKwjAQhOF6rlar9f0f1rkMS7ZmU6HU/B8MJAsJydV0HQAAAAAAAAAAAAAAAAAAAAAAwHc7Za8clKNyUs6rvggtuSi9clVuyqDcV30RWvJQRuWpvJRJea/6Ivwjr2ej8y2z/4nuUc/r2eh8y+x/onvU83o2Ot8y+5/o/tdyHbOfmbWQXP+kc299SmLPlfacd19t7H0lPRvp5KV9nuuYfmbWQnL9k8699ZDEnivtOe++2tj7Sno20slL+zzXMePMrIXk+iede+spiT1X2nPefbWx95X0bKSTl/b5B8fDFWE=
   </data>
  </layer>
  <objectgroup name="Collectables" opacity="0.4">
