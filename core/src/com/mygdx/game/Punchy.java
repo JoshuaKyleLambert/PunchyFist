@@ -3,6 +3,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -35,9 +36,13 @@ public class Punchy {
     private final TextureRegion jumpUp;
     private final TextureRegion jumpDown;
 
-    public Punchy(TextureRegion texture) {
-        TextureRegion[] regions; // = TextureRegion.split(texture, WIDTH, HEIGHT)[0];
-        regions = texture.split(WIDTH, HEIGHT)[0];
+    private final Sound flySound;
+
+
+
+    public Punchy(TextureRegion texture, Sound flySound) {
+        this.flySound = flySound;
+        TextureRegion[] regions = texture.split(WIDTH, HEIGHT)[0];
 
         walking = new Animation(0.25F, regions[0], regions[1]);
         walking.setPlayMode(Animation.PlayMode.LOOP);
@@ -101,6 +106,7 @@ public class Punchy {
 
         // easy change here to enable a flying.  just take out !blockJump
         if (input.isKeyPressed(Input.Keys.UP)) {
+            if( ySpeed != MAX_Y_SPEED) flySound.play();
             ySpeed = MAX_Y_SPEED;
             jumpYDistance += ySpeed;
             blockJump = jumpYDistance > MAX_JUMP_DISTANCE;

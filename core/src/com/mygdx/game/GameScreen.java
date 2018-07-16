@@ -2,6 +2,8 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -70,11 +72,13 @@ public class GameScreen extends ScreenAdapter {
         orthogonalTiledMapRenderer.setView(camera);
         TextureAtlas textureAtlas = punchyFist.getAssetManager().get("punchy_fist_assets.atlas");
 
-        punchy = new Punchy(textureAtlas.findRegion("punchy"));
+        punchy = new Punchy(textureAtlas.findRegion("punchy"), punchyFist.getAssetManager().get("fly.wav", Sound.class));
         fist = new Fist(textureAtlas.findRegion("fist"));
         bitmapFont = punchyFist.getAssetManager().get("score.fnt");
         glyphLayout = new GlyphLayout();
         populateHearts(textureAtlas);
+        punchyFist.getAssetManager().get("punchyTheme.mp3", Music.class).setLooping(true);
+        punchyFist.getAssetManager().get("punchyTheme.mp3", Music.class).play();
     }
 
     @Override
@@ -263,7 +267,7 @@ public class GameScreen extends ScreenAdapter {
         for (Iterator<Heart> iter = hearts.iterator(); iter.hasNext(); ) {
             Heart heart = iter.next();
             if (punchy.getCollisionRectangle().overlaps(heart.getCollisionRectangle())) {
-
+                punchyFist.getAssetManager().get("heart.wav", Sound.class).play();
                 iter.remove();
                 updateScore(25);
             }
