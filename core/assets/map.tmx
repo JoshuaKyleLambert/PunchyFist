@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="160" height="28" tilewidth="16" tileheight="16" infinite="0" nextobjectid="25">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="160" height="28" tilewidth="16" tileheight="16" infinite="0" nextobjectid="37">
  <tileset firstgid="1" source="floor.tsx"/>
- <tileset firstgid="19" source="heart.tsx"/>
+ <tileset firstgid="19" source="pump.tsx"/>
  <layer name="Tile Layer 1" width="160" height="28">
   <data encoding="base64" compression="zlib">
    eJzt1dkKwyAUhOHu+5a+/8N2LkUc6kkKYv0/GDAHFL3JrFYAAAAAAAAAAAAAAAAAAAAAAADfrZWNslV2yl45NL0RRnJUTspZuShX5db0RhjJXXkoT+WlTMq76Y3wj1zPRue9Kr0n+t3z+1tzPRud96r0nuh3z+9vzfVsdN6r0nui379+v/snu9kIKfVPOnfrfZJ8X23PufPmJj+vpmcjnby0z90/2c1GSKl/0rlbX5Pk+2p7zp03N/l5NT0b6eSlfe7+yW42Qkr9k87dekqS76vtOXfe3OTn1fRspJOX9vkH3UUVmg==
   </data>
  </layer>
- <objectgroup name="Collectables" opacity="0.4">
-  <object id="13" gid="19" x="740" y="346" width="32" height="32"/>
-  <object id="14" gid="19" x="623" y="381" width="32" height="32"/>
-  <object id="15" gid="19" x="491" y="354" width="32" height="32"/>
-  <object id="16" gid="19" x="1038" y="256" width="32" height="32"/>
-  <object id="17" gid="19" x="1468" y="378" width="32" height="32"/>
-  <object id="18" gid="19" x="1634" y="378" width="32" height="32"/>
-  <object id="19" gid="19" x="1736" y="344" width="32" height="32"/>
-  <object id="20" gid="19" x="1856" y="372" width="32" height="32"/>
-  <object id="21" gid="19" x="2056" y="212" width="32" height="32"/>
-  <object id="22" gid="19" x="2170" y="272" width="32" height="32"/>
-  <object id="23" gid="19" x="2350" y="380" width="32" height="32"/>
-  <object id="24" gid="19" x="2504" y="390" width="32" height="32"/>
+ <objectgroup name="Collectables">
+  <object id="33" gid="19" x="1358" y="374" width="32" height="32"/>
+  <object id="34" gid="19" x="1098" y="206" width="32" height="32"/>
+  <object id="35" gid="19" x="756" y="344" width="32" height="32"/>
+  <object id="36" gid="19" x="1772" y="350" width="32" height="32"/>
  </objectgroup>
 </map>

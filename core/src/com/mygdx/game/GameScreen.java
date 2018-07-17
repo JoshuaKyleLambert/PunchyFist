@@ -55,6 +55,8 @@ public class GameScreen extends ScreenAdapter {
         this.punchyFist = punchyFist;
     }
 
+    private Hud hud;
+
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
@@ -79,6 +81,11 @@ public class GameScreen extends ScreenAdapter {
         populateHearts(textureAtlas);
         punchyFist.getAssetManager().get("punchyTheme.mp3", Music.class).setLooping(true);
         punchyFist.getAssetManager().get("punchyTheme.mp3", Music.class).play();
+
+        TiledMapTileLayer tiledMapTileLayer = (TiledMapTileLayer) tileMap.getLayers().get(0);
+        float levelWidth = tiledMapTileLayer.getWidth() * tiledMapTileLayer.getTileWidth();
+        hud = new Hud(camera, punchyFist, levelWidth);
+
     }
 
     @Override
@@ -147,7 +154,8 @@ public class GameScreen extends ScreenAdapter {
         }
         punchy.draw(batch);
         fist.draw(batch);
-        drawScore();
+        hud.draw(batch);
+        //drawScore();
         batch.end();
     }
 
